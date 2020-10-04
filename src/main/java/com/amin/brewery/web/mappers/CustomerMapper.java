@@ -1,0 +1,12 @@
+package com.amin.brewery.web.mappers;
+
+import com.amin.brewery.domain.Customer;
+import com.amin.brewery.web.model.CustomerDto;
+import org.mapstruct.Mapper;
+
+@Mapper
+public interface CustomerMapper {
+    CustomerDto customerToCustomerDto(Customer customer);
+
+    Customer customerDtoToCustomer(CustomerDto customerDto);
+}
