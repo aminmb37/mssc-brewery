@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.hamcrest.core.Is.is;
@@ -39,8 +40,13 @@ public class BeerControllerTest {
 
     @Before
     public void setUp() {
-        validBeer = BeerDto.builder().id(UUID.randomUUID())
-                .beerName("Beer1").beerStyle("PALE_ALE").upc(123456789012L).build();
+        validBeer = BeerDto.builder()
+                .id(UUID.randomUUID())
+                .beerName("Beer1")
+                .beerStyle("PALE_ALE")
+                .price(new BigDecimal("12.99"))
+                .upc(123456789012L)
+                .build();
     }
 
     @Test
@@ -50,7 +56,7 @@ public class BeerControllerTest {
         mockMvc.perform(get("/api/v1/beer/" + validBeer.getId().toString())
                 .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(validBeer.getId().toString())))
+                .andExpect(jsonPath("$.beerId", is(validBeer.getId().toString())))
                 .andExpect(jsonPath("$.beerName", is("Beer1")));
     }
 
